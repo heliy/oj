@@ -18,10 +18,10 @@ int pow(int i, int n){
 
 void paint(int begin_i, int begin_j, int n, int level, int valid){
   int i,j;
-  int step = pow(n, level);
+  int size = pow(n, level);
   if(valid == 0){
-    for(i = 0; i < step; i++){
-      for(j = 0; j < step; j++){
+    for(i = 0; i < size; i++){
+      for(j = 0; j < size; j++){
         format[begin_i+i][begin_j+j] = ' ';
       }
     }
