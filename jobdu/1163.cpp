@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
+using namespace std;
+
 int main(){
   bool nums[10001];
   int i, j;
