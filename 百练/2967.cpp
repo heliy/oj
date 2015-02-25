@@ -37,9 +37,6 @@ int main(){
     d %= 1000;
     month = d / 100 + 1;
     day = d % 100;
-    if(day == 0){
-      
-    }
 
     int sc = hour*60*60 + minute*60 + second;
     sc = (int)(100000*(sc/(float)24*60*60));
