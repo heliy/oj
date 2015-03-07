@@ -76,15 +76,16 @@ int main(){
 	cin >> res[i];
       }
     }
-
+    int sd = -1;
     for(i = 1; i <= n; i++){
       if(islight(i) || isheavy(i)){
 	cout << i << endl;
-	break;
+	sd = 1;
+	//	break;
       }
     }
 
-    if(i == n+1){
+    if(sd < 0){
       cout << 0 << endl;
     }
   }
