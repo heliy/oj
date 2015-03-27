@@ -15,7 +15,6 @@ int isok(int m){
   return v-K;
 }
 
-
 int main(){
   unsigned long sum = 0, m, mi, mj;
   double d;
@@ -31,17 +30,10 @@ int main(){
   }
   sort(pus, pus+N);
 
-  mi = 1; mj = sum/K; m = (mi+mj)/2;
-  int test = isok(m);
-  while(test != 0){
-    if(test < 0){
-      mj = m-1;
-    }else{
-      mi = m+1;
-    }
-    m = (mi+mj)/2;
-    test = isok(m);
+  for(m = (sum/K); m > 0; m -= 100){
+    if(isok(m) >= )
   }
-  printf("%.2f\n", (double)m/100);
-  return 0;
+  for(m += 100,i = 0; i < 100 && m > 0; m--, i++){
+
+  }
 }
