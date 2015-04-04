@@ -4,7 +4,7 @@ class Solution:
         alphes = {}
         maxlen = begin =  0;
         for (index, letter) in enumerate(s):
-            # find the len of the longest string ends in idex
+            # find the len of the longest string ends in index
             if letter in alphes and alphes[letter] >= begin:
                 begin = alphes[letter] + 1
             alphes[letter] = index
