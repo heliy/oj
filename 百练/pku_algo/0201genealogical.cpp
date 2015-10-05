@@ -35,8 +35,10 @@ void printresult(){
   cout << result[n-1] << "\n";
 }
 
+bool isOK; 			// 只要输出1个就可以！
+
 void top(int res){
-  if(res == 0){
+  if(res == 0 || isOK){
     return;
   }
 
@@ -51,6 +53,7 @@ void top(int res){
     result[n-res] = can[i]+1;
     if(res == 1){
       printresult();
+      isOK = true;
       return;
     }else{
       isVisited[can[i]] = true;
@@ -85,5 +88,6 @@ int main(){
       }
     }
   }
+  isOK = false;
   top(n);
 }
