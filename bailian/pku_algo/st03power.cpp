@@ -1,11 +1,3 @@
-/*
- * Dinic algo for max flow
- *
- * This implementation assumes that #nodes, #edges, and capacity on each edge <= INT_MAX,
- * which means INT_MAX is the best approximation of INF on edge capacity.
- * The total amount of max flow computed can be up to LLONG_MAX (not defined in this file),
- * but each 'dfs' call in 'dinic' can return <= INT_MAX flow value.
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -16,7 +8,7 @@
 #include <algorithm>
 #include<iostream>
 
-#define N (200+2)
+#define N (204+4)
 #define M (N*N+4*N)
 
 typedef long long LL;
@@ -143,24 +135,52 @@ int upstream(int s, int n) {
   return cnt; // excluding s
 }
 
-int main() {
-  int m, n, c, i, j, d;
-  while(cin >> m >> n){
-    vector<vector<int> > cap(n+1, vector<int>(n+1));
-    for(d = 0; d < m; d++){
-      scanf("%d %d %d", &i, &j, &c);
-      cap[i][j] += c;
+int mat[N][N];
+
+int main(){
+    int n, np, nc, m, i, j, u, v ,z;
+    char c;
+    while(cin >> n >> np >> nc >> m){
+              memset(mat, 0, sizeof(mat));
+              dinic_init();
+              for(i = 0; i < m; i++){
+                    c = '-';
+                    while(c != '('){
+                            scanf("%c", &c);
+                    }
+                    scanf("%d,%d)%d", &u, &v, &z);
+                    mat[u+1][v+1] = z;
+//                    cout << u << v << z;
+//                    add_edge(u+1, v+1, z, 0);
+              }
+              for(i = 0; i < np; i++){
+                    c = '-';
+                    while(c != '('){
+                            scanf("%c", &c);
+                    }
+                    scanf("%d)%d", &u, &z);
+                    mat[0][u+1] = z;
+//                    add_edge(0, u+1, z, 0);
+              }
+              for(i = 0; i < nc; i++){
+                    c = '-';
+                    while(c != '('){
+                            scanf("%c", &c);
+                    }
+                    scanf("%d)%d", &u, &z);
+                    mat[u+1][n+1] = z;
+//                    add_edge(u+1, n+1, z, 0);
+              }
+              for(i = 0; i < n+2; i++){
+                    for(j = 0; j < n+2; j++){
+                          if(mat[i][j] > 0){
+                                       add_edge(i, j, mat[i][j], 0);
+                          }
+                    }
+              }
+//              print_graph(n+2);
+              LL flow = dinic(0, n+1);
+              cout << flow << "\n";
     }
-    dinic_init();
-    for(i = 1; i <= n; i++){
-      for(j = 1; j <= n; j++){
-	if(cap[i][j] > 0){
-	  add_edge(i, j, cap[i][j], 0);
-	}	
-      }
-    }
-    int flow = dinic(1, n);
-    printf("%d\n", flow);
-  }
-  return 0;
+//    system("pause");
 }

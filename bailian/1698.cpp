@@ -14,9 +14,9 @@
 #include <queue>
 #include <vector>
 #include <algorithm>
-#include<iostream>
+#include <iostream>
 
-#define N (200+2)
+#define N (50*7+30)
 #define M (N*N+4*N)
 
 typedef long long LL;
@@ -143,24 +143,47 @@ int upstream(int s, int n) {
   return cnt; // excluding s
 }
 
+int mat[N][N];
+int fs[7];
+
 int main() {
-  int m, n, c, i, j, d;
-  while(cin >> m >> n){
-    vector<vector<int> > cap(n+1, vector<int>(n+1));
-    for(d = 0; d < m; d++){
-      scanf("%d %d %d", &i, &j, &c);
-      cap[i][j] += c;
-    }
-    dinic_init();
-    for(i = 1; i <= n; i++){
-      for(j = 1; j <= n; j++){
-	if(cap[i][j] > 0){
-	  add_edge(i, j, cap[i][j], 0);
-	}	
+  int t, n, d, w, i, j, k, maxw=0, sumd;
+  cin >> t;
+  while(cin >> n){
+    memset(mat, 0, sizeof(mat));
+    for(sumd = 0, i = 1; i <= n; i++){
+      for(j = 0; j < 7; j++){
+	cin >> fs[j];
+      }
+      cin >> d >> w;
+      mat[0][i] = d;
+      sumd += d;
+      for(j = 0; j < w; j++){
+	for(k = 0; k < 7; k++){
+	  mat[i][1+j*7+k+n] = fs[k];
+	}
+      }
+      if(w > maxw){
+	maxw = w;
       }
     }
-    int flow = dinic(1, n);
-    printf("%d\n", flow);
+    int s = 0, t = maxw*7+n+2;
+    for(j = 0; j < maxw*7; j++){
+      mat[1+n+j][t] = 1;
+    }
+    dinic_init();
+    for(i = s; i <= t; i++){
+      for(j = i+1; j<= t; j++){
+	add_edge(i, j, mat[i][j], mat[j][i]);
+      }
+    }
+    // print_graph(1+n);
+    LL d = dinic(s, t);
+    if(d == sumd){
+      cout << "Yes\n";
+    }else{
+      cout << "No\n";
+    }
   }
   return 0;
 }
